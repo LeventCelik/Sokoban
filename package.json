@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "eslint": "^8.51.0",
     "phaser": "^3.60.0"
-  }
+  },
+  "type": "module"
 }
