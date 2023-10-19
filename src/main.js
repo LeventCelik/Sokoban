@@ -1,13 +1,14 @@
 import { Game } from "./Game.js";
+import { gameConfig, levels } from "./config.js";
 
 const config = {
 	type: Phaser.AUTO,
-	width: 800,
-	height: 600,
+	width: levels.level1.width,
+	height: levels.level1.height,
 	physics: {
 		default: "arcade",
 		arcade: {
-			gravity: { y: 300 }
+			gravity: { y: 0 }
 		}
 	},
 	scene: [Game]
