@@ -129,5 +129,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Levent
-tutorial/
+# MacOS files
+.DS_Store
