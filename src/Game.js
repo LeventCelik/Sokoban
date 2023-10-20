@@ -23,17 +23,24 @@ export class Game extends Phaser.Scene {
 			this.scene.restart();
 			press = true;
 		} else if (this.cursors.left.isDown && !press) {
-			console.log(press);
-			this.player.x -= gameConfig.move_x;
+			const new_x = this.player.x - gameConfig.move_x;
+			if(!checkWorld(new_x, this.player.y)) return;
+			this.player.x = new_x;
 			press = true;
 		} else if (this.cursors.right.isDown && !press) {
-			this.player.x += gameConfig.move_x;
+			const new_x = this.player.x + gameConfig.move_x;
+			if(!checkWorld(new_x, this.player.y)) return;
+			this.player.x = new_x;
 			press = true;
 		} else if (this.cursors.up.isDown && !press) {
-			this.player.y -= gameConfig.move_y;
+			const new_y = this.player.y - gameConfig.move_y;
+			if(!checkWorld(this.player.x, new_y)) return;
+			this.player.y = new_y;
 			press = true;
 		}else if (this.cursors.down.isDown && !press) {
-			this.player.y += gameConfig.move_y;
+			const new_y = this.player.y + gameConfig.move_y;
+			if(!checkWorld(this.player.x, new_y)) return;
+			this.player.y = new_y;
 			press = true;
 		} else {
 			press = false;
@@ -82,6 +89,18 @@ function create_layer(tilemap) {
 	const layer = tilemap.createLayer(0, tiles, 0, 0);
 	return layer;
 }
+
+/**
+ * To check world bounds
+ */
+function checkWorld(x, y){
+	if(x < 0) return false;
+	if(y < 0) return false;
+	if(x > levels[gameConfig.currentLevel].width) return false;
+	if(y > levels[gameConfig.currentLevel].height) return false;
+	return true;
+}
+
 
 
 

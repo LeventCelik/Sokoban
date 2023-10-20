@@ -11,7 +11,7 @@ const b = 5;
 const ban = 13*4;
 
 export const gameConfig = {
-	currentLevel: "level2",
+	currentLevel: "level1",
 	assets: {
 		// Asset choices
 		file: '../assets/tiles/sokoban_tilesheet.png',
