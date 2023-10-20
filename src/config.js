@@ -11,9 +11,10 @@ const b = 5;
 const ban = 13*4;
 
 export const gameConfig = {
-	currentLevel: "level2",
+	currentLevel: "level1",
 	assets: {
 		// Asset choices
+		file: '../assets/tiles/sokoban_tilesheet.png',
 		empty: e,
 		road: r,
 		wall: w,
@@ -25,7 +26,6 @@ export const gameConfig = {
 		// Player related stuff
 
 	},
-	// Other config data
 	/**
 	 * This special syntax is called a "getter".
 	 * It allows us to access game_objects without the parentheses.
@@ -41,7 +41,9 @@ export const gameConfig = {
 			targets: t,
 			boxes: b
 		}
-	}
+	},
+	move_x : wFactor,
+	move_y : hFactor
 };
 
 export const levels = {
@@ -61,8 +63,8 @@ export const levels = {
 		width: wFactor * 11,
 		height: hFactor * 9,
 		ban: {
-			x: 1*wFactor,
-			y: 4*hFactor
+			x: 1*wFactor + wFactor/2,
+			y: 4*hFactor + hFactor/2
 		},
 		data: [
 			[e, e, e, e, w, w, w, e, e, e, e],
