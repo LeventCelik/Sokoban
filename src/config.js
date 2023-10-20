@@ -23,14 +23,22 @@ export const gameConfig = {
 		// Player related stuff
 
 	},
-	game_objects: {
-		// Rendered in order so that the last one is on top
-		background: road,
-		walls: wall,
-		targets: target,
-		boxes: box
-	}
 	// Other config data
+	/**
+	 * This special syntax is called a "getter".
+	 * It allows us to access game_objects without the parentheses.
+	 * The function itself allows us to return a different value each time,
+	 * so that we do not need to deep copy the object each time.
+	 */
+	get game_objects() {
+		return {
+			// Rendered in order so that the last one is on top
+			background: road,
+			walls: wall,
+			targets: target,
+			boxes: box
+		}
+	}
 };
 
 
