@@ -1,4 +1,4 @@
-import { gameConfig } from "./config.js";
+import { gameConfig, levels } from "./config.js";
 /**
  * To generate several layers from a single 2D straight array.
  * @param {Array<Array<number>>} location_data Containing where everything goes, e.g.:
@@ -44,4 +44,118 @@ export function level_parser(location_data) {
 	}
 
 	return result;
+}
+
+/**
+ * To easily create a layer from a Tilemap.
+ * @param {Phaser.Tilemaps.Tilemap} tilemap
+ * @return {Phaser.Tilemaps.TilemapLayer}
+ */
+export function create_layer(tilemap) {
+	const tiles = tilemap.addTilesetImage('tiles');
+	const layer = tilemap.createLayer(0, tiles, 0, 0);
+	return layer;
+}
+
+/**
+ * Checks whether the next move from the given coordinates would
+ * stay within the world.
+ * @param {number} x coordinate
+ * @param {number} y coordinate
+ * @param {string} dir direction
+ * @return {boolean}
+ */
+export function check_world(x, y, dir) {
+	const updated = new_coordinates(x, y, dir);
+	x = updated.x;
+	y = updated.y;
+	if (x < 0) return false;
+	if (y < 0) return false;
+	if (x >= levels[gameConfig.currentLevel].width) return false;
+	if (y >= levels[gameConfig.currentLevel].height) return false;
+	return true;
+}
+
+/**
+ * Checks whether the next move from the given coordinates would
+ * stay hit a box. Returns the box if so, false otherwise.
+ * @param {number} x coordinate
+ * @param {number} y coordinate
+ * @param {string} dir direction
+ * @param {Array<Phaser.GameObjects.Sprite>} boxes
+ */
+export function check_boxes(x, y, dir, boxes) {
+	const updated = new_coordinates(x, y, dir);
+	x = updated.x;
+	y = updated.y;
+	for (let box of boxes) {
+		if (x === box.x && y === box.y) {
+			return box;
+		}
+	}
+	return false;
+}
+
+/**
+ * Calculates the next coordinates from the sprite's position.
+ * @param {number} x coordinate
+ * @param {number} y coordinate
+ * @param {string} dir direction
+ * @returns {number, number} new coordinates
+ */
+function new_coordinates(x, y, dir) {
+	var north_or_west = false; // To determine + or - direction
+	var east_or_west = false; // To determine x or y direction
+	switch (dir) {
+		case 'LEFT':
+			east_or_west = true;
+			north_or_west = true;
+			break;
+		case 'UP':
+			north_or_west = true;
+			break;
+		case 'RIGHT':
+			east_or_west = true;
+			break;
+		case 'DOWN':
+			break;
+	}
+
+	x += (north_or_west ? -1 : 1) * (east_or_west ? gameConfig.move_x : 0);
+	y += (north_or_west ? -1 : 1) * (east_or_west ? 0 : gameConfig.move_y);
+	return {x: x, y: y};
+}
+
+/**
+ * Updates the coordinates of a sprite.
+ * @param {Phaser.GameObjects.Sprite} sprite
+ * @param {number} dir direction
+ * @return {void}
+ */
+export function move_sprite(sprite, dir) {
+	const updated = new_coordinates(sprite.x, sprite.y, dir);
+	sprite.x = updated.x;
+	sprite.y = updated.y;
+}
+
+/**
+ * Updates the texture model to 'animate' the player.
+ * @param {Phaser.GameObjects.Sprite} player 
+ * @param {number} dir direction
+ */
+export function update_model(player, dir) {
+	switch (dir) {
+		case 'LEFT':
+			player.setTexture('tiles', gameConfig.assets.ban.left);
+			break;
+		case 'UP':
+			player.setTexture('tiles', gameConfig.assets.ban.up);
+			break;
+		case 'RIGHT':
+			player.setTexture('tiles', gameConfig.assets.ban.right);
+			break;
+		case 'DOWN':
+			player.setTexture('tiles', gameConfig.assets.ban.down);
+			break;
+	}
 }

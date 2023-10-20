@@ -5,12 +5,6 @@ const config = {
 	type: Phaser.AUTO,
 	width: levels[gameConfig.currentLevel].width,
 	height: levels[gameConfig.currentLevel].height,
-	physics: {
-		default: "arcade",
-		arcade: {
-			gravity: { y: 0 }
-		}
-	},
 	scene: [Game]
 };
 

@@ -8,10 +8,16 @@ const r = 13*7-1;
 const w = 13*7-6;
 const t = 13*4-1;
 const b = 5;
-const ban = 13*4;
+const banDown = 13*4;
+const banUp = 13*4+3;
+const banLeft = 13*6+3;
+const banRight = 13*6;
 
 export const gameConfig = {
 	currentLevel: "level1",
+	updateLevel: function(level) {
+		this.currentLevel = level;
+	},
 	assets: {
 		// Asset choices
 		file: '../assets/tiles/sokoban_tilesheet.png',
@@ -20,7 +26,12 @@ export const gameConfig = {
 		wall: w,
 		target: t,
 		box: b,
-		ban: ban
+		ban: {
+			down: banDown,
+			up: banUp,
+			left: banLeft,
+			right: banRight
+		}
 	},
 	playerSettings: {
 		// Player related stuff
@@ -47,24 +58,12 @@ export const gameConfig = {
 };
 
 export const levels = {
-	// Levels should have multiple layers, this is just a start
-	test: {
-			width: 6*wFactor,
-			height: 5*hFactor,
-			map: [
-			[w, w, w, w, w, e],
-			[w, r, r, r, w, w],
-			[w, r, b, t, w],
-			[w, r, r, r, w],
-			[w, w, w, w, w]
-		],
-	},
 	"level1": {
 		width: wFactor * 11,
 		height: hFactor * 9,
 		ban: {
-			x: 1*wFactor + wFactor/2,
-			y: 4*hFactor + hFactor/2
+			x: 1 * wFactor,
+			y: 4 * hFactor
 		},
 		data: [
 			[e, e, e, e, w, w, w, e, e, e, e],
@@ -82,8 +81,8 @@ export const levels = {
 		width: wFactor * 12,
 		height: hFactor * 12,
 		ban: {
-			x: 6*wFactor + wFactor/2,
-			y: 3*hFactor + hFactor/2
+			x: 6 * wFactor,
+			y: 3 * hFactor
 		},
 		data: [
 			[e, w, w, w, w, w, w, w, w, w, e, e],
