@@ -69,6 +69,11 @@ export class Game extends Phaser.Scene {
 				utils.move_sprite(player, dir);
 				return;
 			}
+			// Box in the way
+			if (utils.check_world(box.x, box.y, dir)) return;
+			if (utils.check_walls(box.x, box.y, dir, walls)) return;
+			if (utils.check_boxes(box.x, box.y, dir, boxes)) return;
+			
 			utils.move_sprite(player, dir);
 			utils.move_sprite(box, dir);
 		}
