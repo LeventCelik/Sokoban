@@ -11,16 +11,13 @@ export class Game extends Phaser.Scene {
 	}
 	// Remember, avoid hard coding as much as possible!
 	create() {
-		// Pull the level data from config.js
-		const level = gameConfig.currentLevel;
-
 		// Tilemaps and layers will be stored in these containers, respectively
 		// We will overwrite the values, and only use the keys
 		const tilemaps = gameConfig.game_objects; // Copy of gameConfig.game_objects, safe to change
 		const layers = gameConfig.game_objects;
 
 		// Read the level data from config and parse it
-		const parsed_data = level_parser(levels[level].data);
+		const parsed_data = level_parser(levels[gameConfig.currentLevel].data);
 
 		// Create a Tilemap for each layer of objects
 		for (const obj_name in tilemaps) {

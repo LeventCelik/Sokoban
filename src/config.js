@@ -11,7 +11,7 @@ const b = 5;
 const ban = 13*4;
 
 export const gameConfig = {
-	currentLevel: "level1",
+	currentLevel: "level2",
 	assets: {
 		// Asset choices
 		empty: e,
@@ -44,8 +44,6 @@ export const gameConfig = {
 	}
 };
 
-
-
 export const levels = {
 	// Levels should have multiple layers, this is just a start
 	test: {
@@ -58,7 +56,7 @@ export const levels = {
 			[w, r, r, r, w],
 			[w, w, w, w, w]
 		],
-		},
+	},
 	"level1": {
 		width: wFactor * 11,
 		height: hFactor * 9,
@@ -77,5 +75,27 @@ export const levels = {
 			[e, e, e, e, w, t, w, e, e, e, e],
 			[e, e, e, e, w, w, w, e, e, e, e]
 		],
-		}
+	},
+	"level2": {
+		width: wFactor * 12,
+		height: hFactor * 12,
+		ban: {
+			x: 6*wFactor,
+			y: 3*hFactor
+		},
+		data: [
+			[e, w, w, w, w, w, w, w, w, w, e, e],
+			[e, w, t, t, t, t, t, t, t, w, w, w],
+			[w, w, b, b, b, b, b, b, b, b, t, w],
+			[w, t, b, r, r, r, r, r, r, b, t, w],
+			[w, t, b, r, w, w, w, w, r, b, t, w],
+			[w, t, b, r, w, e, e, w, r, b, t, w],
+			[w, t, b, r, w, e, e, w, r, b, t, w],
+			[w, t, b, r, w, w, w, w, r, b, t, w],
+			[w, t, b, r, r, r, r, r, r, b, t, w],
+			[w, t, b, b, b, b, b, b, b, b, w, w],
+			[w, w, w, t, t, t, t, t, t, t, w, e],
+			[e, e, w, w, w, w, w, w, w, w, w, e],
+		],
+	},
 };

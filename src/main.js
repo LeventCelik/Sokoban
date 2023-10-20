@@ -3,8 +3,8 @@ import { gameConfig, levels } from "./config.js";
 
 const config = {
 	type: Phaser.AUTO,
-	width: levels.level1.width,
-	height: levels.level1.height,
+	width: levels[gameConfig.currentLevel].width,
+	height: levels[gameConfig.currentLevel].height,
 	physics: {
 		default: "arcade",
 		arcade: {
