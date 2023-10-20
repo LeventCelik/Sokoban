@@ -8,26 +8,41 @@ export class Game extends Phaser.Scene {
 			startFrame: 0
 		});
 	}
+	// Remember, avoid hard coding as much as possible!
 	create() {
-		const box = gameConfig.assets.box;
-		const road = gameConfig.assets.road;
-		const wall = gameConfig.assets.wall;
+		// Pull the level data from config.js
+		const level = gameConfig.currentLevel;
 
-		const background = this.make.tilemap({
-			data: levels.level1.background,
-			tileWidth: 64,
-			tileHeight: 64
-		});
+		// Game objects will be stored in these containers
+		const game_objects = { // Full modularity, yay!
+			background: null,
+			walls: null,
+			boxes: null,
+			targets: null
+		}
+		// Game layers will be stored in these containers, using the same keys
+		const game_layers = JSON.parse(JSON.stringify(game_objects)); // Deep copy of game_objects
 
-		const objects = this.make.tilemap({
-			data: levels.level1.objects,
-			tileWidth: 64,
-			tileHeight: 64
-		});
+		// Create a Tilemap for each layer of objects
+		for (const obj_name in game_objects) {
+			game_objects[obj_name] = this.make.tilemap({
+				data: levels[level][obj_name],
+				tileWidth: 64,
+				tileHeight: 64
+			});
+		}
 
-		const bg_tiles = background.addTilesetImage('tiles');
-		const bg_layer = background.createLayer(0, bg_tiles, 0, 0);
-		const object_tiles = objects.addTilesetImage('tiles');
-		const object_layer = objects.createLayer(0, object_tiles, 0, 0);
+		// Create a Layer from each Tilemap
+		// After this for loop, game objects are displayed on screen.
+		for (const obj_name in game_layers) {
+			game_layers[obj_name] = create_layer(game_objects[obj_name]);
+		}
 	}
+}
+
+
+function create_layer(tilemap) {
+	const tiles = tilemap.addTilesetImage('tiles');
+	const layer = tilemap.createLayer(0, tiles, 0, 0);
+	return layer;
 }
