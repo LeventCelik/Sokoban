@@ -1,4 +1,5 @@
 import { gameConfig, levels } from "./config.js";
+import { level_parser } from "./utils.js";
 
 export class Game extends Phaser.Scene {
 	preload() {
@@ -18,10 +19,13 @@ export class Game extends Phaser.Scene {
 		const tilemaps = gameConfig.game_objects; // Copy of gameConfig.game_objects, safe to change
 		const layers = gameConfig.game_objects;
 
+		// Read the level data from config and parse it
+		const parsed_data = level_parser(levels[level].data);
+
 		// Create a Tilemap for each layer of objects
 		for (const obj_name in tilemaps) {
 			tilemaps[obj_name] = this.make.tilemap({
-				data: levels[level][obj_name],
+				data: parsed_data[obj_name],
 				tileWidth: 64,
 				tileHeight: 64
 			});

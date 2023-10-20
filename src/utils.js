@@ -10,6 +10,8 @@ import { gameConfig } from "./config.js";
  * @return {JSON<Array>} Containing individual object data
  */
 export function level_parser(location_data) {
+
+
 	// First, extract the unique object values from the location_data
 	const game_objects = gameConfig.game_objects;
 	const values = [];
@@ -30,14 +32,16 @@ export function level_parser(location_data) {
 			for (let colIndex = 0; colIndex < location_data[rowIndex].length; colIndex++) {
 				if (location_data[rowIndex][colIndex] === game_objects[obj_name]) {
 					newArray[rowIndex][colIndex] = game_objects[obj_name];
-					// if (location_data[rowIndex][colIndex] !== game_objects.background) {
-					// 	result.background[rowIndex][colIndex] = game_objects.background;
-					// }
+					if (location_data[rowIndex][colIndex] !== game_objects.road
+						&& location_data[rowIndex][colIndex] !== game_objects.empty) {
+						result.road[rowIndex][colIndex] = game_objects.road;
+					}
 				}
 			}
 		}
 		// Add this 2D array to the result
 		result[obj_name] = newArray;
 	}
+
 	return result;
 }
