@@ -1,13 +1,12 @@
 import { gameConfig, levels } from "./config.js";
-import { create_layer, check_world, level_parser, check_boxes, move_sprite, update_model } from "./utils.js";
+import utils from "./utils.js";
 
-var press = false; // TODO: Get rid of global variables
 export class Game extends Phaser.Scene {
 	// preload(), create(), and update() are necessary methods. Rest are organization.
 	preload() {
 		this.load.spritesheet('tiles', gameConfig.assets.file, {
-			frameWidth: 64,
-			frameHeight: 64,
+			frameWidth: gameConfig.assets.factor,
+			frameHeight: gameConfig.assets.factor,
 			startFrame: 0
 		});
 	}
@@ -25,7 +24,7 @@ export class Game extends Phaser.Scene {
 		var layers = gameConfig.game_objects;
 
 		// Read the level data from config and parse it
-		const parsed_data = level_parser(levels[gameConfig.currentLevel].data);
+		const parsed_data = utils.level_parser(levels[gameConfig.currentLevel].data);
 
 		// Create a Tilemap for each layer of objects
 		for (const obj_name in tilemaps) {
@@ -39,9 +38,10 @@ export class Game extends Phaser.Scene {
 		// Create a Layer from each Tilemap
 		// After this for loop, game objects are displayed on screen.
 		for (const obj_name in layers) {
-			layers[obj_name] = create_layer(tilemaps[obj_name]);
+			layers[obj_name] = utils.create_layer(tilemaps[obj_name]);
 		}
-		this.walls = layers.walls;
+		this.walls = layers.walls.createFromTiles(gameConfig.assets.wall, 0, {key: 'tiles', frame: gameConfig.assets.wall})
+						.map(wall => wall.setOrigin(0, 0));
 		this.boxes = layers.boxes.createFromTiles(gameConfig.assets.box, 0, {key: 'tiles', frame: gameConfig.assets.box})
 						.map(box => box.setOrigin(0, 0));
 		
@@ -57,18 +57,20 @@ export class Game extends Phaser.Scene {
 		// TODO: Config file for keys
 		const player = this.player;
 		const boxes = this.boxes;
+		const walls = this.walls;
 		const scene = this.scene;
 
 		function moveAction(event, dir) {
-			update_model(player, dir)
-			if (!check_world(player.x, player.y, dir)) return;
-			const box = check_boxes(player.x, player.y, dir, boxes);
+			utils.update_model(player, dir);
+			if (utils.check_world(player.x, player.y, dir)) return;
+			if (utils.check_walls(player.x, player.y, dir, walls)) return;
+			const box = utils.check_boxes(player.x, player.y, dir, boxes);
 			if (!box) {
-				move_sprite(player, dir);
+				utils.move_sprite(player, dir);
 				return;
 			}
-			move_sprite(player, dir);
-			move_sprite(box, dir);
+			utils.move_sprite(player, dir);
+			utils.move_sprite(box, dir);
 		}
 
 		function resetAction(event) {

@@ -9,7 +9,7 @@ import { gameConfig, levels } from "./config.js";
  *  [wall, wall, wall, wall, wall, null]]
  * @return {JSON<Array>} Containing individual object data
  */
-export function level_parser(location_data) {
+function level_parser(location_data) {
 
 
 	// First, extract the unique object values from the location_data
@@ -51,7 +51,7 @@ export function level_parser(location_data) {
  * @param {Phaser.Tilemaps.Tilemap} tilemap
  * @return {Phaser.Tilemaps.TilemapLayer}
  */
-export function create_layer(tilemap) {
+function create_layer(tilemap) {
 	const tiles = tilemap.addTilesetImage('tiles');
 	const layer = tilemap.createLayer(0, tiles, 0, 0);
 	return layer;
@@ -65,15 +65,15 @@ export function create_layer(tilemap) {
  * @param {string} dir direction
  * @return {boolean}
  */
-export function check_world(x, y, dir) {
+function check_world(x, y, dir) {
 	const updated = new_coordinates(x, y, dir);
 	x = updated.x;
 	y = updated.y;
-	if (x < 0) return false;
-	if (y < 0) return false;
-	if (x >= levels[gameConfig.currentLevel].width) return false;
-	if (y >= levels[gameConfig.currentLevel].height) return false;
-	return true;
+	if (x < 0) return true;
+	if (y < 0) return true;
+	if (x >= levels[gameConfig.currentLevel].width) return true;
+	if (y >= levels[gameConfig.currentLevel].height) return true;
+	return false;
 }
 
 /**
@@ -84,13 +84,33 @@ export function check_world(x, y, dir) {
  * @param {string} dir direction
  * @param {Array<Phaser.GameObjects.Sprite>} boxes
  */
-export function check_boxes(x, y, dir, boxes) {
+function check_boxes(x, y, dir, boxes) {
 	const updated = new_coordinates(x, y, dir);
 	x = updated.x;
 	y = updated.y;
 	for (let box of boxes) {
 		if (x === box.x && y === box.y) {
 			return box;
+		}
+	}
+	return false;
+}
+
+/**
+ * Checks whether the next move from the given coordinates would
+ * stay hit a box. Returns the box if so, false otherwise.
+ * @param {number} x coordinate
+ * @param {number} y coordinate
+ * @param {string} dir direction
+ * @param {Array<Phaser.GameObjects.Sprite>} walls
+ */
+function check_walls(x, y, dir, walls) {
+	const updated = new_coordinates(x, y, dir);
+	x = updated.x;
+	y = updated.y;
+	for (let wall of walls) {
+		if (x === wall.x && y === wall.y) {
+			return wall;
 		}
 	}
 	return false;
@@ -132,7 +152,7 @@ function new_coordinates(x, y, dir) {
  * @param {number} dir direction
  * @return {void}
  */
-export function move_sprite(sprite, dir) {
+function move_sprite(sprite, dir) {
 	const updated = new_coordinates(sprite.x, sprite.y, dir);
 	sprite.x = updated.x;
 	sprite.y = updated.y;
@@ -143,7 +163,7 @@ export function move_sprite(sprite, dir) {
  * @param {Phaser.GameObjects.Sprite} player 
  * @param {number} dir direction
  */
-export function update_model(player, dir) {
+function update_model(player, dir) {
 	switch (dir) {
 		case 'LEFT':
 			player.setTexture('tiles', gameConfig.assets.ban.left);
@@ -159,3 +179,13 @@ export function update_model(player, dir) {
 			break;
 	}
 }
+
+export default {
+	level_parser,
+	create_layer,
+	check_world,
+	check_boxes,
+	check_walls,
+	move_sprite,
+	update_model
+};

@@ -1,5 +1,3 @@
-import { level_parser } from "./utils.js";
-
 const wFactor = 64;
 const hFactor = 64;
 
@@ -14,13 +12,14 @@ const banLeft = 13*6+3;
 const banRight = 13*6;
 
 export const gameConfig = {
-	currentLevel: "level1",
+	currentLevel: "level2",
 	updateLevel: function(level) {
 		this.currentLevel = level;
 	},
 	assets: {
 		// Asset choices
 		file: '../assets/tiles/sokoban_tilesheet.png',
+		factor: 64,
 		empty: e,
 		road: r,
 		wall: w,
