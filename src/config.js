@@ -22,8 +22,15 @@ export const gameConfig = {
 	playerSettings: {
 		// Player related stuff
 
+	},
+	game_objects: {
+		// Rendered in order so that the last one is on top
+		background: road,
+		walls: wall,
+		targets: target,
+		boxes: box
 	}
-	// Other configs
+	// Other config data
 };
 
 

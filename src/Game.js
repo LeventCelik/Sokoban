@@ -13,19 +13,14 @@ export class Game extends Phaser.Scene {
 		// Pull the level data from config.js
 		const level = gameConfig.currentLevel;
 
-		// Game objects will be stored in these containers
-		const game_objects = { // Full modularity, yay!
-			background: null,
-			walls: null,
-			boxes: null,
-			targets: null
-		}
-		// Game layers will be stored in these containers, using the same keys
-		const game_layers = JSON.parse(JSON.stringify(game_objects)); // Deep copy of game_objects
+		// Tilemaps and layers will be stored in these containers, respectively
+		// We will overwrite the values, and only use the keys
+		const tilemaps = JSON.parse(JSON.stringify(gameConfig.game_objects)); // Deep copy of gameConfig.game_objects
+		const layers = JSON.parse(JSON.stringify(gameConfig.game_objects)); // Deep copy of gameConfig.game_objects
 
 		// Create a Tilemap for each layer of objects
-		for (const obj_name in game_objects) {
-			game_objects[obj_name] = this.make.tilemap({
+		for (const obj_name in tilemaps) {
+			tilemaps[obj_name] = this.make.tilemap({
 				data: levels[level][obj_name],
 				tileWidth: 64,
 				tileHeight: 64
@@ -34,13 +29,17 @@ export class Game extends Phaser.Scene {
 
 		// Create a Layer from each Tilemap
 		// After this for loop, game objects are displayed on screen.
-		for (const obj_name in game_layers) {
-			game_layers[obj_name] = create_layer(game_objects[obj_name]);
+		for (const obj_name in layers) {
+			layers[obj_name] = create_layer(tilemaps[obj_name]);
 		}
 	}
 }
 
-
+/**
+ * To easily create a layer from a Tilemap.
+ * @param {Phaser.Tilemaps.Tilemap} tilemap 
+ * @return {Phaser.Tilemaps.TilemapLayer}
+ */
 function create_layer(tilemap) {
 	const tiles = tilemap.addTilesetImage('tiles');
 	const layer = tilemap.createLayer(0, tiles, 0, 0);
