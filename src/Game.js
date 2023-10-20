@@ -63,17 +63,17 @@ export class Game extends Phaser.Scene {
 		function moveAction(event, dir) {
 			utils.update_model(player, dir);
 			if (utils.check_world(player.x, player.y, dir)) return;
-			if (utils.check_walls(player.x, player.y, dir, walls)) return;
-			const box = utils.check_boxes(player.x, player.y, dir, boxes);
+			if (utils.check_obstacles(player.x, player.y, dir, walls)) return;
+			const box = utils.check_obstacles(player.x, player.y, dir, boxes);
 			if (!box) {
 				utils.move_sprite(player, dir);
 				return;
 			}
 			// Box in the way
 			if (utils.check_world(box.x, box.y, dir)) return;
-			if (utils.check_walls(box.x, box.y, dir, walls)) return;
-			if (utils.check_boxes(box.x, box.y, dir, boxes)) return;
-			
+			if (utils.check_obstacles(box.x, box.y, dir, walls)) return;
+			if (utils.check_obstacles(box.x, box.y, dir, boxes)) return;
+
 			utils.move_sprite(player, dir);
 			utils.move_sprite(box, dir);
 		}

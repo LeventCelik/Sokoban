@@ -82,35 +82,15 @@ function check_world(x, y, dir) {
  * @param {number} x coordinate
  * @param {number} y coordinate
  * @param {string} dir direction
- * @param {Array<Phaser.GameObjects.Sprite>} boxes
+ * @param {Array<Phaser.GameObjects.Sprite>} obstacles boxes or walls
  */
-function check_boxes(x, y, dir, boxes) {
+function check_obstacles(x, y, dir, obstacles) {
 	const updated = new_coordinates(x, y, dir);
 	x = updated.x;
 	y = updated.y;
-	for (let box of boxes) {
-		if (x === box.x && y === box.y) {
-			return box;
-		}
-	}
-	return false;
-}
-
-/**
- * Checks whether the next move from the given coordinates would
- * stay hit a box. Returns the box if so, false otherwise.
- * @param {number} x coordinate
- * @param {number} y coordinate
- * @param {string} dir direction
- * @param {Array<Phaser.GameObjects.Sprite>} walls
- */
-function check_walls(x, y, dir, walls) {
-	const updated = new_coordinates(x, y, dir);
-	x = updated.x;
-	y = updated.y;
-	for (let wall of walls) {
-		if (x === wall.x && y === wall.y) {
-			return wall;
+	for (let obstacle of obstacles) {
+		if (x === obstacle.x && y === obstacle.y) {
+			return obstacle;
 		}
 	}
 	return false;
@@ -184,8 +164,7 @@ export default {
 	level_parser,
 	create_layer,
 	check_world,
-	check_boxes,
-	check_walls,
+	check_obstacles,
 	move_sprite,
 	update_model
 };
