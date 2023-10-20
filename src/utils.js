@@ -11,14 +11,15 @@ import { gameConfig } from "./config.js";
  */
 export function level_parser(location_data) {
 	// First, extract the unique object values from the location_data
-	const game_objects = JSON.parse(JSON.stringify(gameConfig.game_objects));
+	const game_objects = gameConfig.game_objects;
 	const values = [];
+
 	for (const obj_name in game_objects) {
 		values.push(game_objects[obj_name]);
 	}
 
-	// Prepare the resulting array of 2D arrays
-	let result = JSON.parse(JSON.stringify(gameConfig.game_objects)); // We need the keys
+	// Prepare the resulting object of 2D arrays
+	let result = gameConfig.game_objects; // We need the keys
 	
 	for (let obj_name in game_objects) {
 		// Create a new 2D array filled with nulls, but with the same dimensions as the input array
@@ -29,6 +30,9 @@ export function level_parser(location_data) {
 			for (let colIndex = 0; colIndex < location_data[rowIndex].length; colIndex++) {
 				if (location_data[rowIndex][colIndex] === game_objects[obj_name]) {
 					newArray[rowIndex][colIndex] = game_objects[obj_name];
+					// if (location_data[rowIndex][colIndex] !== game_objects.background) {
+					// 	result.background[rowIndex][colIndex] = game_objects.background;
+					// }
 				}
 			}
 		}

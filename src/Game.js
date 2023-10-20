@@ -15,8 +15,8 @@ export class Game extends Phaser.Scene {
 
 		// Tilemaps and layers will be stored in these containers, respectively
 		// We will overwrite the values, and only use the keys
-		const tilemaps = JSON.parse(JSON.stringify(gameConfig.game_objects)); // Deep copy of gameConfig.game_objects
-		const layers = JSON.parse(JSON.stringify(gameConfig.game_objects)); // Deep copy of gameConfig.game_objects
+		const tilemaps = gameConfig.game_objects; // Copy of gameConfig.game_objects, safe to change
+		const layers = gameConfig.game_objects;
 
 		// Create a Tilemap for each layer of objects
 		for (const obj_name in tilemaps) {
