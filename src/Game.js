@@ -1,4 +1,4 @@
-import { gameConfig, levels } from "./config.js";
+import { gameConfig, levels, keys } from "./config.js";
 import utils from "./utils.js";
 
 export class Game extends Phaser.Scene {
@@ -42,6 +42,8 @@ export class Game extends Phaser.Scene {
 		}
 		this.walls = layers.walls.createFromTiles(gameConfig.assets.wall, 0, {key: 'tiles', frame: gameConfig.assets.wall})
 						.map(wall => wall.setOrigin(0, 0));
+		this.targets = layers.targets.createFromTiles(gameConfig.assets.target, 0, {key: 'tiles', frame: gameConfig.assets.target})
+						.map(target => target.setOrigin(0, 0));
 		this.boxes = layers.boxes.createFromTiles(gameConfig.assets.box, 0, {key: 'tiles', frame: gameConfig.assets.box})
 						.map(box => box.setOrigin(0, 0));
 		
@@ -55,43 +57,39 @@ export class Game extends Phaser.Scene {
 
 	addKeys() {
 		// TODO: Config file for keys
-		const player = this.player;
-		const boxes = this.boxes;
-		const walls = this.walls;
-		const scene = this.scene;
-
+		const game = this;
 		function moveAction(event, dir) {
-			utils.update_model(player, dir);
-			if (utils.check_world(player.x, player.y, dir)) return;
-			if (utils.check_obstacles(player.x, player.y, dir, walls)) return;
-			const box = utils.check_obstacles(player.x, player.y, dir, boxes);
+			utils.update_model(game.player, dir);
+			if (utils.check_world(game.player.x, game.player.y, dir)) return;
+			if (utils.check_obstacles(game.player.x, game.player.y, dir, game.walls)) return;
+			const box = utils.check_obstacles(game.player.x, game.player.y, dir, game.boxes);
 			if (!box) {
-				utils.move_sprite(player, dir);
+				utils.move_sprite(game.player, dir);
 				return;
 			}
 			// Box in the way
 			if (utils.check_world(box.x, box.y, dir)) return;
-			if (utils.check_obstacles(box.x, box.y, dir, walls)) return;
-			if (utils.check_obstacles(box.x, box.y, dir, boxes)) return;
+			if (utils.check_obstacles(box.x, box.y, dir, game.walls)) return;
+			if (utils.check_obstacles(box.x, box.y, dir, game.boxes)) return;
 
-			utils.move_sprite(player, dir);
+			utils.move_sprite(game.player, dir);
 			utils.move_sprite(box, dir);
+			//utils.check_targets
 		}
 
 		function resetAction(event) {
-			scene.restart();
+			game.scene.restart();
 		}
 
-		this.left_key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); // For 'A' key
-		this.left_key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT); // For 'LEFT_ARROW' key
-		this.right_key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D); // For 'D' key
-		this.right_key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); // For 'RIGHT' key
-		this.up_key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W); // For 'W' key
-		this.up_key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP); // For 'UP_ARROW' key
-		this.down_key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S); // For 'S' key
-		this.down_key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN); // For 'DOWN_ARROW' key
-		
-		this.reset_key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R); // For 'R' key
+		this.left_key1 = this.input.keyboard.addKey(keys.left1);
+		this.left_key2 = this.input.keyboard.addKey(keys.left2);
+		this.right_key1 = this.input.keyboard.addKey(keys.right1);
+		this.right_key2 = this.input.keyboard.addKey(keys.right2);
+		this.up_key1 = this.input.keyboard.addKey(keys.up1);
+		this.up_key2 = this.input.keyboard.addKey(keys.up2);
+		this.down_key1 = this.input.keyboard.addKey(keys.down1);
+		this.down_key2 = this.input.keyboard.addKey(keys.down2); 
+		this.reset_key = this.input.keyboard.addKey(keys.reset);
 
 
 		// Add a dir event listener to both keys, assigning the same function.

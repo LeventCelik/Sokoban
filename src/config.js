@@ -99,3 +99,15 @@ export const levels = {
 		],
 	},
 };
+
+export const keys = {
+	left1: Phaser.Input.Keyboard.KeyCodes.A,
+	left2: Phaser.Input.Keyboard.KeyCodes.LEFT,
+	right1: Phaser.Input.Keyboard.KeyCodes.D,
+	right2: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+	up1: Phaser.Input.Keyboard.KeyCodes.W,
+	up2: Phaser.Input.Keyboard.KeyCodes.UP,
+	down1: Phaser.Input.Keyboard.KeyCodes.S,
+	down2: Phaser.Input.Keyboard.KeyCodes.DOWN,
+	reset: Phaser.Input.Keyboard.KeyCodes.R
+};
