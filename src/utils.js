@@ -1,4 +1,5 @@
-import { gameConfig, levels } from "./config.js";
+import { gameConfig } from "./config.js";
+
 /**
  * To generate several layers from a single 2D straight array.
  * @param {Array<Array<number>>} location_data Containing where everything goes, e.g.:
@@ -9,10 +10,8 @@ import { gameConfig, levels } from "./config.js";
  *  [wall, wall, wall, wall, wall, null]]
  * @return {JSON<Array>} Containing individual object data
  */
-function level_parser(location_data) {
-
-
-	// First, extract the unique object values from the location_data
+function parse_level(location_data) {
+	location_data = location_data.map(row => row.map(char => gameConfig.assets.mappings[char]));
 	const game_objects = gameConfig.game_objects;
 	const values = [];
 
@@ -71,8 +70,8 @@ function check_world(x, y, dir, level) {
 	y = updated.y;
 	if (x < 0) return true;
 	if (y < 0) return true;
-	if (x >= levels[level].width) return true;
-	if (y >= levels[level].height) return true;
+	if (x >= level.width * gameConfig.wFactor) return true;
+	if (y >= level.height * gameConfig.hFactor) return true;
 	return false;
 }
 
@@ -140,8 +139,8 @@ function new_coordinates(x, y, dir) {
 			break;
 	}
 
-	x += (north_or_west ? -1 : 1) * (east_or_west ? gameConfig.move_x : 0);
-	y += (north_or_west ? -1 : 1) * (east_or_west ? 0 : gameConfig.move_y);
+	x += (north_or_west ? -1 : 1) * (east_or_west ? gameConfig.wFactor : 0);
+	y += (north_or_west ? -1 : 1) * (east_or_west ? 0 : gameConfig.hFactor);
 	return {x: x, y: y};
 }
 
@@ -181,11 +180,10 @@ function update_model(player, dir) {
 
 function get_next_level(currentLevel) {
 	return "level" + (parseInt(currentLevel.match(/\d+$/), 10) + 1);
-}
-  
+} 
 
 export default {
-	level_parser,
+	level_parser: parse_level,
 	create_layer,
 	check_world,
 	check_targets,

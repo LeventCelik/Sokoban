@@ -14,7 +14,7 @@ const banRight = 13*6;
 export const gameConfig = {
 	assets: {
 		// Asset choices
-		file: '../assets/tiles/sokoban_tilesheet.png',
+		file: 'assets/tiles/sokoban_tilesheet.png',
 		factor: 64,
 		empty: e,
 		road: r,
@@ -26,11 +26,21 @@ export const gameConfig = {
 			up: banUp,
 			left: banLeft,
 			right: banRight
+		},
+		mappings: {
+			'e': e,
+			'r': r,
+			'w': w,
+			't': t,
+			'b': b
 		}
 	},
 	playerSettings: {
 		// Player related stuff
 
+	},
+	levels: {
+		filepath: 'assets/levels/'
 	},
 	/**
 	 * This special syntax is called a "getter".
@@ -48,52 +58,8 @@ export const gameConfig = {
 			boxes: b
 		}
 	},
-	move_x : wFactor,
-	move_y : hFactor
-};
-
-export const levels = {
-	"level1": {
-		width: wFactor * 11,
-		height: hFactor * 9,
-		ban: {
-			x: 1 * wFactor,
-			y: 4 * hFactor
-		},
-		data: [
-			[e, e, e, e, w, w, w, e, e, e, e],
-			[e, e, e, e, w, t, w, w, w, e, e],
-			[e, e, e, e, w, r, r, r, w, e, e],
-			[w, w, w, w, w, b, w, r, w, w, w],
-			[w, r, b, r, r, t, r, r, b, t, w],
-			[w, w, w, w, w, b, w, w, w, w, w],
-			[e, e, e, e, w, r, w, e, e, e, e],
-			[e, e, e, e, w, t, w, e, e, e, e],
-			[e, e, e, e, w, w, w, e, e, e, e]
-		],
-	},
-	"level2": {
-		width: wFactor * 12,
-		height: hFactor * 12,
-		ban: {
-			x: 6 * wFactor,
-			y: 3 * hFactor
-		},
-		data: [
-			[e, w, w, w, w, w, w, w, w, w, e, e],
-			[e, w, t, t, t, t, t, t, t, w, w, w],
-			[w, w, b, b, b, b, b, b, b, b, t, w],
-			[w, t, b, r, r, r, r, r, r, b, t, w],
-			[w, t, b, r, w, w, w, w, r, b, t, w],
-			[w, t, b, r, w, e, e, w, r, b, t, w],
-			[w, t, b, r, w, e, e, w, r, b, t, w],
-			[w, t, b, r, w, w, w, w, r, b, t, w],
-			[w, t, b, r, r, r, r, r, r, b, t, w],
-			[w, t, b, b, b, b, b, b, b, b, w, w],
-			[w, w, w, t, t, t, t, t, t, t, w, e],
-			[e, e, w, w, w, w, w, w, w, w, w, e],
-		],
-	},
+	wFactor : wFactor,
+	hFactor : hFactor
 };
 
 export const keys = {

@@ -1,7 +1,5 @@
 import { Playground } from "./Scenes/Playground.js";
 import { Menu } from "./Scenes/Menu.js";
-import { gameConfig, levels } from "./config.js";
-
 
 const config = {
 	type: Phaser.AUTO,

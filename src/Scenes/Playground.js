@@ -1,4 +1,4 @@
-import { gameConfig, levels, keys } from "../config.js";
+import { gameConfig, keys } from "../config.js";
 import utils from "../utils.js";
 
 export class Playground extends Phaser.Scene {
@@ -20,10 +20,19 @@ export class Playground extends Phaser.Scene {
 			frameHeight: gameConfig.assets.factor,
 			startFrame: 0
 		});
+		this.load.json('levelData' + this.level, gameConfig.levels.filepath + this.level + '.json');
+		this.load.on('loaderror', function (file, error) {
+			console.log('ERROR')
+			if (file.key === 'levelData' + this.level) {
+				console.log('No more levels to play');
+				// TODO: End game screen
+			}
+		});
 	}
 	// Remember, avoid hard coding as much as possible!
 	create() {
-		this.scale.resize(levels[this.level].width, levels[this.level].height);
+		this.level_data = this.cache.json.get('levelData' + this.level);
+		this.scale.resize(this.level_data.width * gameConfig.wFactor, this.level_data.height * gameConfig.hFactor);
 		this.createWorld();
 		this.createCharacter();
 		this.addKeys();
@@ -36,7 +45,7 @@ export class Playground extends Phaser.Scene {
 		var layers = gameConfig.game_objects;
 
 		// Read the level data from config and parse it
-		const parsed_data = utils.level_parser(levels[this.level].data);
+		const parsed_data = utils.level_parser(this.level_data.locations);
 
 		// Create a Tilemap for each layer of objects
 		for (const obj_name in tilemaps) {
@@ -62,8 +71,8 @@ export class Playground extends Phaser.Scene {
 	}
 
 	createCharacter() {
-		const ban = levels[this.level].ban;
-		this.player = this.add.sprite(ban.x, ban.y, 'tiles', gameConfig.assets.ban.down);
+		const ban = this.level_data.ban;
+		this.player = this.add.sprite(ban.x * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.ban.down);
 		this.player.setOrigin(0, 0);
 	}
 
@@ -71,7 +80,7 @@ export class Playground extends Phaser.Scene {
 		const game = this;
 		function move_action(event, dir) {
 			utils.update_model(game.player, dir);
-			if (utils.check_world(game.player.x, game.player.y, dir, game.level)) return;
+			if (utils.check_world(game.player.x, game.player.y, dir, game.level_data)) return;
 			if (utils.check_obstacles(game.player.x, game.player.y, dir, game.walls)) return;
 			const box = utils.check_obstacles(game.player.x, game.player.y, dir, game.boxes);
 			if (!box) {
@@ -79,7 +88,7 @@ export class Playground extends Phaser.Scene {
 				return;
 			}
 			// Box in the way
-			if (utils.check_world(box.x, box.y, dir, game.level)) return;
+			if (utils.check_world(box.x, box.y, dir, game.level_data)) return;
 			if (utils.check_obstacles(box.x, box.y, dir, game.walls)) return;
 			if (utils.check_obstacles(box.x, box.y, dir, game.boxes)) return;
 
@@ -107,13 +116,7 @@ export class Playground extends Phaser.Scene {
 	}
 
 	next_level() {
-		const next_level = utils.get_next_level(this.level);
-		if (!levels[next_level]) {
-			console.log('No more levels to play');
-			// TODO: End screen
-			return;
-		}
-		this.scene.start("Playground", { level: next_level});
+		this.scene.start("Playground", { level: utils.get_next_level(this.level)});
 	}
 
 }
