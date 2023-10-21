@@ -1,8 +1,19 @@
-import { gameConfig, levels, keys } from "./config.js";
-import utils from "./utils.js";
+import { gameConfig, levels, keys } from "../config.js";
+import utils from "../utils.js";
 
-export class Game extends Phaser.Scene {
-	// preload(), create(), and update() are necessary methods. Rest are organization.
+export class Playground extends Phaser.Scene {
+	// init(), preload(), create(), and update() are necessary methods. Rest are organization.
+	constructor() {
+		super({key: "Playground"});
+	}
+	
+	init(data) {
+		if (!data.level) {
+			data = {level: "level1"}
+		}
+		this.level = data.level;
+	}
+	
 	preload() {
 		this.load.spritesheet('tiles', gameConfig.assets.file, {
 			frameWidth: gameConfig.assets.factor,
@@ -12,6 +23,7 @@ export class Game extends Phaser.Scene {
 	}
 	// Remember, avoid hard coding as much as possible!
 	create() {
+		this.scale.resize(levels[this.level].width, levels[this.level].height);
 		this.createWorld();
 		this.createCharacter();
 		this.addKeys();
@@ -24,7 +36,7 @@ export class Game extends Phaser.Scene {
 		var layers = gameConfig.game_objects;
 
 		// Read the level data from config and parse it
-		const parsed_data = utils.level_parser(levels[gameConfig.currentLevel].data);
+		const parsed_data = utils.level_parser(levels[this.level].data);
 
 		// Create a Tilemap for each layer of objects
 		for (const obj_name in tilemaps) {
@@ -50,13 +62,12 @@ export class Game extends Phaser.Scene {
 	}
 
 	createCharacter() {
-		const ban = levels[gameConfig.currentLevel].ban;
+		const ban = levels[this.level].ban;
 		this.player = this.add.sprite(ban.x, ban.y, 'tiles', gameConfig.assets.ban.down);
 		this.player.setOrigin(0, 0);
 	}
 
 	addKeys() {
-		// TODO: Config file for keys
 		const game = this;
 		function moveAction(event, dir) {
 			utils.update_model(game.player, dir);
@@ -74,7 +85,7 @@ export class Game extends Phaser.Scene {
 
 			utils.move_sprite(game.player, dir);
 			utils.move_sprite(box, dir);
-			//utils.check_targets
+			utils.check_targets();
 		}
 
 		function resetAction(event) {

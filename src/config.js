@@ -12,10 +12,6 @@ const banLeft = 13*6+3;
 const banRight = 13*6;
 
 export const gameConfig = {
-	currentLevel: "level2",
-	updateLevel: function(level) {
-		this.currentLevel = level;
-	},
 	assets: {
 		// Asset choices
 		file: '../assets/tiles/sokoban_tilesheet.png',
