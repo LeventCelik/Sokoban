@@ -31,11 +31,10 @@ export class Playground extends Phaser.Scene {
 	}
 	// Remember, avoid hard coding as much as possible!
 	create() {
-		this.level_data = this.cache.json.get('levelData' + this.level);
-		this.scale.resize(this.level_data.width * gameConfig.wFactor, this.level_data.height * gameConfig.hFactor);
 		this.createWorld();
 		this.createCharacter();
 		this.addKeys();
+		this.scale.resize(this.level_data.width * gameConfig.wFactor, this.level_data.height * gameConfig.hFactor);
 	}
 
 	createWorld() {
@@ -45,6 +44,7 @@ export class Playground extends Phaser.Scene {
 		var layers = gameConfig.game_objects;
 
 		// Read the level data from config and parse it
+		this.level_data = this.cache.json.get('levelData' + this.level);
 		const parsed_data = utils.level_parser(this.level_data.locations);
 
 		// Create a Tilemap for each layer of objects
