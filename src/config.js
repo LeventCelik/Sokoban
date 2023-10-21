@@ -71,5 +71,8 @@ export const keys = {
 	up2: Phaser.Input.Keyboard.KeyCodes.UP,
 	down1: Phaser.Input.Keyboard.KeyCodes.S,
 	down2: Phaser.Input.Keyboard.KeyCodes.DOWN,
-	reset: Phaser.Input.Keyboard.KeyCodes.R
+	reset: Phaser.Input.Keyboard.KeyCodes.R,
+	next: Phaser.Input.Keyboard.KeyCodes.N,
+	previous: Phaser.Input.Keyboard.KeyCodes.B,
+	undo: Phaser.Input.Keyboard.KeyCodes.U
 };

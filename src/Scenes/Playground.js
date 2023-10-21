@@ -74,17 +74,26 @@ export class Playground extends Phaser.Scene {
 		const ban = this.level_data.ban;
 		this.player = this.add.sprite(ban.x * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.ban.down);
 		this.player.setOrigin(0, 0);
+		this.move_count = 0;
+		this.move_text = this.add.text(16, 16, 'Moves: 0', { fontSize: '32px', fill: '#000' });
+		this.last_move = null;
+		this.last_moved_objects = [];
 	}
 
 	addKeys() {
 		const game = this;
 		function move_action(event, dir) {
 			utils.update_model(game.player, dir);
+			game.move_text.setText('Moves: ' + ++game.move_count);
+			game.last_move = 'STOP';
+			game.last_moved_objects = [];
 			if (utils.check_world(game.player.x, game.player.y, dir, game.level_data)) return;
 			if (utils.check_obstacles(game.player.x, game.player.y, dir, game.walls)) return;
 			const box = utils.check_obstacles(game.player.x, game.player.y, dir, game.boxes);
 			if (!box) {
 				utils.move_sprite(game.player, dir);
+				game.last_move = dir;
+				game.last_moved_objects = [game.player];
 				return;
 			}
 			// Box in the way
@@ -94,12 +103,27 @@ export class Playground extends Phaser.Scene {
 
 			utils.move_sprite(game.player, dir);
 			utils.move_sprite(box, dir);
+			game.last_move = dir;
+			game.last_moved_objects = [game.player, box];
 			if (utils.check_targets(game.boxes, game.targets)) game.next_level();
-
 		}
 
 		function reset_action(event) {
 			game.scene.restart();
+		}
+
+		function undo_action() {
+			const last_move = game.last_move;
+			game.last_move = null;
+			if (!last_move) return;
+			game.move_text.setText('Moves: ' + --game.move_count);
+			if (last_move == 'STOP') return;
+			console.log(game.last_moved_objects);
+			console.log(last_move);
+			console.log(utils.opposite_direction(last_move));
+			for (const sprite of game.last_moved_objects) {
+				utils.move_sprite(sprite, utils.opposite_direction(last_move));
+			}
 		}
 
 		// Define keys and add listeners to them
@@ -112,11 +136,17 @@ export class Playground extends Phaser.Scene {
 		this.input.keyboard.addKey(keys.down1).on('down', (event) => {move_action(event, 'DOWN')});
 		this.input.keyboard.addKey(keys.down2).on('down', (event) => {move_action(event, 'DOWN')});
 		this.input.keyboard.addKey(keys.reset).on('down', reset_action);
-		this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N).on('down', (event) => {this.next_level()});
+		this.input.keyboard.addKey(keys.next).on('down', (event) => {this.next_level()});
+		this.input.keyboard.addKey(keys.previous).on('down', (event) => {this.previous_level()});
+		this.input.keyboard.addKey(keys.undo).on('down', undo_action);
 	}
 
 	next_level() {
-		this.scene.start("Playground", { level: utils.get_next_level(this.level)});
+		this.scene.start("Playground", {level: utils.get_next_level(this.level)});
+	}
+
+	previous_level() {
+		this.scene.start("Playground", {level: utils.get_previous_level(this.level)});
 	}
 
 }
