@@ -81,28 +81,16 @@ export class Game extends Phaser.Scene {
 			game.scene.restart();
 		}
 
-		this.left_key1 = this.input.keyboard.addKey(keys.left1);
-		this.left_key2 = this.input.keyboard.addKey(keys.left2);
-		this.right_key1 = this.input.keyboard.addKey(keys.right1);
-		this.right_key2 = this.input.keyboard.addKey(keys.right2);
-		this.up_key1 = this.input.keyboard.addKey(keys.up1);
-		this.up_key2 = this.input.keyboard.addKey(keys.up2);
-		this.down_key1 = this.input.keyboard.addKey(keys.down1);
-		this.down_key2 = this.input.keyboard.addKey(keys.down2); 
-		this.reset_key = this.input.keyboard.addKey(keys.reset);
-
-
-		// Add a dir event listener to both keys, assigning the same function.
-		this.left_key1.on('down', (event) => {moveAction(event, 'LEFT')});
-		this.left_key2.on('down', (event) => {moveAction(event, 'LEFT')});
-		this.right_key1.on('down', (event) => {moveAction(event, 'RIGHT')});
-		this.right_key2.on('down', (event) => {moveAction(event, 'RIGHT')});
-		this.up_key1.on('down', (event) => {moveAction(event, 'UP')});
-		this.up_key2.on('down', (event) => {moveAction(event, 'UP')});
-		this.down_key1.on('down', (event) => {moveAction(event, 'DOWN')});
-		this.down_key2.on('down', (event) => {moveAction(event, 'DOWN')});
-		
-		this.reset_key.on('down', resetAction);
+		// Define keys and add listeners to them
+		this.input.keyboard.addKey(keys.left1).on('down', (event) => {moveAction(event, 'LEFT')});
+		this.input.keyboard.addKey(keys.left2).on('down', (event) => {moveAction(event, 'LEFT')});
+		this.input.keyboard.addKey(keys.right1).on('down', (event) => {moveAction(event, 'RIGHT')});
+		this.input.keyboard.addKey(keys.right2).on('down', (event) => {moveAction(event, 'RIGHT')});
+		this.input.keyboard.addKey(keys.up1).on('down', (event) => {moveAction(event, 'UP')});
+		this.input.keyboard.addKey(keys.up2).on('down', (event) => {moveAction(event, 'UP')});
+		this.input.keyboard.addKey(keys.down1).on('down', (event) => {moveAction(event, 'DOWN')});
+		this.input.keyboard.addKey(keys.down2).on('down', (event) => {moveAction(event, 'DOWN')});
+		this.input.keyboard.addKey(keys.reset).on('down', resetAction);
 	}
 }
 
