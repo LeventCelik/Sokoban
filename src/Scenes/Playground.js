@@ -118,9 +118,6 @@ export class Playground extends Phaser.Scene {
 			if (!last_move) return;
 			game.move_text.setText('Moves: ' + --game.move_count);
 			if (last_move == 'STOP') return;
-			console.log(game.last_moved_objects);
-			console.log(last_move);
-			console.log(utils.opposite_direction(last_move));
 			for (const sprite of game.last_moved_objects) {
 				utils.move_sprite(sprite, utils.opposite_direction(last_move));
 			}
