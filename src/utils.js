@@ -65,14 +65,14 @@ function create_layer(tilemap) {
  * @param {string} dir direction
  * @return {boolean}
  */
-function check_world(x, y, dir) {
+function check_world(x, y, dir, level) {
 	const updated = new_coordinates(x, y, dir);
 	x = updated.x;
 	y = updated.y;
 	if (x < 0) return true;
 	if (y < 0) return true;
-	if (x >= levels[gameConfig.currentLevel].width) return true;
-	if (y >= levels[gameConfig.currentLevel].height) return true;
+	if (x >= levels[level].width) return true;
+	if (y >= levels[level].height) return true;
 	return false;
 }
 
@@ -94,6 +94,25 @@ function check_obstacles(x, y, dir, obstacles) {
 		}
 	}
 	return false;
+}
+
+/**
+ * To check game over condition
+ */
+function check_targets(boxes, targets) {
+	for (let box of boxes) {
+		let box_in_place = false;
+		for (let target of targets) {
+			if (box.x == target.x && box.y == target.y) {
+				box_in_place = true;
+				break;
+			}
+		}
+		if (!box_in_place) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /**
@@ -160,11 +179,18 @@ function update_model(player, dir) {
 	}
 }
 
+function get_next_level(currentLevel) {
+	return "level" + (parseInt(currentLevel.match(/\d+$/), 10) + 1);
+}
+  
+
 export default {
 	level_parser,
 	create_layer,
 	check_world,
+	check_targets,
 	check_obstacles,
 	move_sprite,
-	update_model
+	update_model,
+	get_next_level
 };

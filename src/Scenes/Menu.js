@@ -6,7 +6,6 @@ export class Menu extends Phaser.Scene {
 		super({key: "Menu"});
 	}
 	create() {
-		console.log("Main menu done");
 		this.scene.start("Playground", { level: "level1"});
 	}
 }

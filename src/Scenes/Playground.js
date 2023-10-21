@@ -69,9 +69,9 @@ export class Playground extends Phaser.Scene {
 
 	addKeys() {
 		const game = this;
-		function moveAction(event, dir) {
+		function move_action(event, dir) {
 			utils.update_model(game.player, dir);
-			if (utils.check_world(game.player.x, game.player.y, dir)) return;
+			if (utils.check_world(game.player.x, game.player.y, dir, game.level)) return;
 			if (utils.check_obstacles(game.player.x, game.player.y, dir, game.walls)) return;
 			const box = utils.check_obstacles(game.player.x, game.player.y, dir, game.boxes);
 			if (!box) {
@@ -79,30 +79,43 @@ export class Playground extends Phaser.Scene {
 				return;
 			}
 			// Box in the way
-			if (utils.check_world(box.x, box.y, dir)) return;
+			if (utils.check_world(box.x, box.y, dir, game.level)) return;
 			if (utils.check_obstacles(box.x, box.y, dir, game.walls)) return;
 			if (utils.check_obstacles(box.x, box.y, dir, game.boxes)) return;
 
 			utils.move_sprite(game.player, dir);
 			utils.move_sprite(box, dir);
-			utils.check_targets();
+			if (utils.check_targets(game.boxes, game.targets)) game.next_level();
+
 		}
 
-		function resetAction(event) {
+		function reset_action(event) {
 			game.scene.restart();
 		}
 
 		// Define keys and add listeners to them
-		this.input.keyboard.addKey(keys.left1).on('down', (event) => {moveAction(event, 'LEFT')});
-		this.input.keyboard.addKey(keys.left2).on('down', (event) => {moveAction(event, 'LEFT')});
-		this.input.keyboard.addKey(keys.right1).on('down', (event) => {moveAction(event, 'RIGHT')});
-		this.input.keyboard.addKey(keys.right2).on('down', (event) => {moveAction(event, 'RIGHT')});
-		this.input.keyboard.addKey(keys.up1).on('down', (event) => {moveAction(event, 'UP')});
-		this.input.keyboard.addKey(keys.up2).on('down', (event) => {moveAction(event, 'UP')});
-		this.input.keyboard.addKey(keys.down1).on('down', (event) => {moveAction(event, 'DOWN')});
-		this.input.keyboard.addKey(keys.down2).on('down', (event) => {moveAction(event, 'DOWN')});
-		this.input.keyboard.addKey(keys.reset).on('down', resetAction);
+		this.input.keyboard.addKey(keys.left1).on('down', (event) => {move_action(event, 'LEFT')});
+		this.input.keyboard.addKey(keys.left2).on('down', (event) => {move_action(event, 'LEFT')});
+		this.input.keyboard.addKey(keys.right1).on('down', (event) => {move_action(event, 'RIGHT')});
+		this.input.keyboard.addKey(keys.right2).on('down', (event) => {move_action(event, 'RIGHT')});
+		this.input.keyboard.addKey(keys.up1).on('down', (event) => {move_action(event, 'UP')});
+		this.input.keyboard.addKey(keys.up2).on('down', (event) => {move_action(event, 'UP')});
+		this.input.keyboard.addKey(keys.down1).on('down', (event) => {move_action(event, 'DOWN')});
+		this.input.keyboard.addKey(keys.down2).on('down', (event) => {move_action(event, 'DOWN')});
+		this.input.keyboard.addKey(keys.reset).on('down', reset_action);
+		this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N).on('down', (event) => {this.next_level()});
 	}
+
+	next_level() {
+		const next_level = utils.get_next_level(this.level);
+		if (!levels[next_level]) {
+			console.log('No more levels to play');
+			// TODO: End screen
+			return;
+		}
+		this.scene.start("Playground", { level: next_level});
+	}
+
 }
 
 
