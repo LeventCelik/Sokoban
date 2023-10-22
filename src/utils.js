@@ -157,6 +157,24 @@ function move_sprite(sprite, dir) {
 }
 
 /**
+ * To be used with 'undo' action.
+ * @param {string} dir 
+ * @returns Opposite direction
+ */
+function opposite_direction(dir) {
+	switch (dir) {
+		case 'LEFT':
+			return 'RIGHT';
+		case 'UP':
+			return 'DOWN';
+		case 'RIGHT':
+			return 'LEFT';
+		case 'DOWN':
+			return 'UP';
+	}
+}
+
+/**
  * Updates the texture model to 'animate' the player.
  * @param {Phaser.GameObjects.Sprite} player 
  * @param {number} dir direction
@@ -178,8 +196,25 @@ function update_model(player, dir) {
 	}
 }
 
+/**
+ * Parses the current level to get the next one;
+ * i.e., get_next_level('level1') -> 'level2'.
+ * @param {string} currentLevel 
+ * @returns next level
+ */
 function get_next_level(currentLevel) {
 	return "level" + (parseInt(currentLevel.match(/\d+$/), 10) + 1);
+} 
+
+/**
+ * Opposite of get_next_level().
+ * Parses the current level to get the previous one;
+ * i.e., get_next_level('level2') -> 'level1'.
+ * @param {*} currentLevel 
+ * @returns previous level
+ */
+function get_previous_level(currentLevel) {
+	return "level" + (parseInt(currentLevel.match(/\d+$/), 10) - 1);
 } 
 
 export default {
@@ -189,6 +224,8 @@ export default {
 	check_targets,
 	check_obstacles,
 	move_sprite,
+	opposite_direction,
 	update_model,
-	get_next_level
+	get_next_level,
+	get_previous_level
 };
