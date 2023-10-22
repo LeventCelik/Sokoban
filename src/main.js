@@ -1,6 +1,8 @@
 import { Playground } from "./Scenes/Playground.js";
 import { Menu } from "./Scenes/Menu.js";
 
+await document.fonts.load('10pt "LoveGlitch"');
+
 const config = {
 	type: Phaser.AUTO,
 	scale: {

@@ -15,9 +15,9 @@ export class Playground extends Phaser.Scene {
 	}
 	
 	preload() {
-		this.load.spritesheet('tiles', gameConfig.assets.file, {
-			frameWidth: gameConfig.assets.factor,
-			frameHeight: gameConfig.assets.factor,
+		this.load.spritesheet('tiles', gameConfig.assets.tiles.file, {
+			frameWidth: gameConfig.assets.tiles.factor,
+			frameHeight: gameConfig.assets.tiles.factor,
 			startFrame: 0
 		});
 		this.load.json('levelData' + this.level, gameConfig.levels.filepath + this.level + '.json');
@@ -61,21 +61,24 @@ export class Playground extends Phaser.Scene {
 		for (const obj_name in layers) {
 			layers[obj_name] = utils.create_layer(tilemaps[obj_name]);
 		}
-		this.walls = layers.walls.createFromTiles(gameConfig.assets.wall, 0, {key: 'tiles', frame: gameConfig.assets.wall})
+		this.walls = layers.walls.createFromTiles(gameConfig.assets.tiles.wall, 0, {key: 'tiles', frame: gameConfig.assets.tiles.wall})
 						.map(wall => wall.setOrigin(0, 0));
-		this.targets = layers.targets.createFromTiles(gameConfig.assets.target, 0, {key: 'tiles', frame: gameConfig.assets.target})
+		this.targets = layers.targets.createFromTiles(gameConfig.assets.tiles.target, 0, {key: 'tiles', frame: gameConfig.assets.tiles.target})
 						.map(target => target.setOrigin(0, 0));
-		this.boxes = layers.boxes.createFromTiles(gameConfig.assets.box, 0, {key: 'tiles', frame: gameConfig.assets.box})
+		this.boxes = layers.boxes.createFromTiles(gameConfig.assets.tiles.box, 0, {key: 'tiles', frame: gameConfig.assets.tiles.box})
 						.map(box => box.setOrigin(0, 0));
+		
+		const level_num = parseInt(this.level.match(/\d+$/), 10);
+		this.add.text(this.level_data.width * gameConfig.wFactor, 3, 'Level ' + level_num, { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' }).setOrigin(1, 0);
 		
 	}
 
 	createCharacter() {
 		const ban = this.level_data.ban;
-		this.player = this.add.sprite(ban.x * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.ban.down);
+		this.player = this.add.sprite(ban.x * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.tiles.ban.down);
 		this.player.setOrigin(0, 0);
 		this.move_count = 0;
-		this.move_text = this.add.text(16, 16, 'Moves: 0', { fontSize: '32px', fill: '#000' });
+		this.move_text = this.add.text(16, 3, 'Moves: 0', { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' });
 		this.last_move = null;
 		this.last_moved_objects = [];
 	}
@@ -145,7 +148,4 @@ export class Playground extends Phaser.Scene {
 	previous_level() {
 		this.scene.start("Playground", {level: utils.get_previous_level(this.level)});
 	}
-
 }
-
-

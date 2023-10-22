@@ -11,36 +11,40 @@ const banUp = 13*4+3;
 const banLeft = 13*6+3;
 const banRight = 13*6;
 
+const folder_path = 'assets/';
+
 export const gameConfig = {
 	assets: {
-		// Asset choices
-		file: 'assets/tiles/sokoban_tilesheet.png',
-		factor: 64,
-		empty: e,
-		road: r,
-		wall: w,
-		target: t,
-		box: b,
-		ban: {
-			down: banDown,
-			up: banUp,
-			left: banLeft,
-			right: banRight
+		folder_path: folder_path,
+		tiles: {
+			file: folder_path + 'tiles/sokoban_tilesheet.png',
+			factor: 64,
+			empty: e,
+			road: r,
+			wall: w,
+			target: t,
+			box: b,
+			ban: {
+				down: banDown,
+				up: banUp,
+				left: banLeft,
+				right: banRight
+			},
+			char_mappings: {
+				'e': e,
+				'r': r,
+				'w': w,
+				't': t,
+				'b': b
+			},
 		},
-		mappings: {
-			'e': e,
-			'r': r,
-			'w': w,
-			't': t,
-			'b': b
+		fonts: {
+			file: folder_path + 'fonts/love-glitch/LoveGlitchPersonalUseRegular.ttf',
+			name: 'MyCustomFont'
 		}
 	},
-	playerSettings: {
-		// Player related stuff
-
-	},
 	levels: {
-		filepath: 'assets/levels/'
+		filepath: folder_path + 'levels/'
 	},
 	/**
 	 * This special syntax is called a "getter".
