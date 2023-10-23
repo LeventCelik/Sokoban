@@ -11,7 +11,7 @@ import { gameConfig } from "./config.js";
  * @return {JSON<Array>} Containing individual object data
  */
 function parse_level(location_data) {
-	location_data = location_data.map(row => row.map(char => gameConfig.assets.mappings[char]));
+	location_data = location_data.map(row => row.map(char => gameConfig.assets.tiles.char_mappings[char]));
 	const game_objects = gameConfig.game_objects;
 	const values = [];
 
@@ -182,16 +182,16 @@ function opposite_direction(dir) {
 function update_model(player, dir) {
 	switch (dir) {
 		case 'LEFT':
-			player.setTexture('tiles', gameConfig.assets.ban.left);
+			player.setTexture('tiles', gameConfig.assets.tiles.ban.left);
 			break;
 		case 'UP':
-			player.setTexture('tiles', gameConfig.assets.ban.up);
+			player.setTexture('tiles', gameConfig.assets.tiles.ban.up);
 			break;
 		case 'RIGHT':
-			player.setTexture('tiles', gameConfig.assets.ban.right);
+			player.setTexture('tiles', gameConfig.assets.tiles.ban.right);
 			break;
 		case 'DOWN':
-			player.setTexture('tiles', gameConfig.assets.ban.down);
+			player.setTexture('tiles', gameConfig.assets.tiles.ban.down);
 			break;
 	}
 }
