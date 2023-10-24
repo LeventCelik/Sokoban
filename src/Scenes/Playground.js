@@ -20,13 +20,10 @@ export class Playground extends Phaser.Scene {
 			frameHeight: gameConfig.assets.tiles.factor,
 			startFrame: 0
 		});
+		const ref = this;
 		this.load.json('levelData' + this.level, gameConfig.levels.filepath + this.level + '.json');
 		this.load.on('loaderror', function (file, error) {
-			console.log('ERROR')
-			if (file.key === 'levelData' + this.level) {
-				console.log('No more levels to play');
-				this.scene.start('Playground', {level: 'level1'})
-			}
+			ref.scene.start('Playground', {level: 'level1'});
 		});
 	}
 
