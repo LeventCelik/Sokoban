@@ -36,8 +36,8 @@ export class EndGame extends Phaser.Scene {
 			color: '#ffffff',
 		}).setOrigin(0.5);
 
-		this.createButton('Play Again', 0x159638, width * 0.68, height * 0.6, width * 0.3, height * 0.1, this.restart_action);
-		this.createButton('Next Level', 0x159638, width * 0.32, height * 0.6, width * 0.3, height * 0.1, this.next_level_action);
+		this.createButton('Play Again', 0x159638, width * 0.32, height * 0.6, width * 0.3, height * 0.1, this.restart_action);
+		this.createButton('Next Level', 0x159638, width * 0.68, height * 0.6, width * 0.3, height * 0.1, this.next_level_action);
 	}
 	
 	createButton(text, color, x, y, width, height, action) { // Does not check width height for small screens
