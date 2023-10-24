@@ -28,13 +28,13 @@ export class EndGame extends Phaser.Scene {
 		const height = this.scale.height;
 		this.add.image(width * 0.5, height * 0.5, 'bg');
 		this.add.text(width * 0.5, height * 0.4, 'Level Complete!', {
-			fontFamily: 'Righteous',
+			fontFamily: 'PixelEmulator',
 			color: '#ffffff',
-			fontSize: 48
+			fontSize: 36
 		}).setOrigin(0.5);
 
 		this.add.text(width * 0.5, height * 0.5, `Completed in ${this.moves} moves`, {
-			fontFamily: 'Poppins',
+			fontFamily: 'PixelEmulator',
 			color: '#ffffff',
 		}).setOrigin(0.5);
 
@@ -44,7 +44,7 @@ export class EndGame extends Phaser.Scene {
 	
 	createButton(text, color, x, y, width, height, action) { // Does not check width height for small screens
 		const button = this.add.rectangle(x, y, width, height, color).setOrigin(0.5);
-		const button_text = this.add.text(x, y, text, { fill: color });
+		const button_text = this.add.text(x, y, text, { fontFamily: 'PixelEmulator', color: '#ffffff' });
 		Phaser.Display.Align.In.Center(button_text, button);
 		button.setInteractive();
 		button.on('pointerup', () => action(this));	

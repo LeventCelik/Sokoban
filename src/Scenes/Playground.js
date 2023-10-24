@@ -70,7 +70,7 @@ export class Playground extends Phaser.Scene {
 						.map(box => box.setOrigin(0, 0));
 		
 		const level_num = parseInt(this.level.match(/\d+$/), 10);
-		this.add.text((3 + this.level_data.width) * gameConfig.wFactor, 3, 'Level ' + level_num, { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' }).setOrigin(1, 0);
+		this.add.text((3 + this.level_data.width) * gameConfig.wFactor, 3, 'Level ' + level_num, { fontFamily: 'PixelEmulator', fontSize: 28, color: '#ffffff' }).setOrigin(1, 0);
 		
 	}
 
@@ -79,7 +79,7 @@ export class Playground extends Phaser.Scene {
 		this.player = this.add.sprite((ban.x + 3) * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.tiles.ban.down);
 		this.player.setOrigin(0, 0);
 		this.move_count = 0;
-		this.move_text = this.add.text(16 + 3 * gameConfig.wFactor, 3, 'Moves: 0', { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' });
+		this.move_text = this.add.text(16 + 3 * gameConfig.wFactor, 3, 'Moves: 0', { fontFamily: 'PixelEmulator', fontSize: 28, color: '#ffffff' });
 		this.last_move = null;
 		this.last_moved_objects = [];
 	}

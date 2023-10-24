@@ -3,7 +3,7 @@ import { Menu } from "./Scenes/Menu.js";
 import { InfoPanel } from "./Scenes/InfoPanel.js";
 import { EndGame } from "./Scenes/EndGame.js";
 
-await document.fonts.load('10pt "LoveGlitch"');
+await document.fonts.load('10pt "PixelEmulator"');
 
 const config = {
 	type: Phaser.AUTO,
