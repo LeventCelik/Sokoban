@@ -106,6 +106,7 @@ function check_obstacles(x, y, dir, obstacles) {
  * To check game over condition
  */
 function check_targets(boxes, targets) {
+	var ret_val = true;
 	for (let box of boxes) {
 		let box_in_place = false;
 		for (let target of targets) {
@@ -115,10 +116,13 @@ function check_targets(boxes, targets) {
 			}
 		}
 		if (!box_in_place) {
-			return false;
+			box.setTexture('tiles', gameConfig.assets.tiles.box);
+			ret_val = false;
+		}else {
+			box.setTexture('tiles', gameConfig.assets.tiles.target_box);
 		}
 	}
-	return true;
+	return ret_val;
 }
 
 /**

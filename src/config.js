@@ -7,6 +7,7 @@ const r = 13*7-1;
 const w = 13*7-6;
 const t = 13*4-1;
 const b = 5;
+const target_box = b + 13;
 const banDown = 13*4;
 const banUp = 13*4+3;
 const banLeft = 13*6+3;
@@ -26,6 +27,7 @@ export const gameConfig = {
 			wall: w,
 			target: t,
 			box: b,
+			target_box: target_box,
 			ban: {
 				down: banDown,
 				up: banUp,
