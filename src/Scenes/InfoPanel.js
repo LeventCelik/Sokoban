@@ -27,41 +27,41 @@ export class InfoPanel extends Phaser.Scene {
 		var y = 40;
 		this.add.text(x - width, y-5, 'Movement', { fontFamily: 'PixelEmulator', fontSize: 20, color: '#ffffff' }).setOrigin(0, 1);
 		var key_name = 'up2';
-		images[key_name] = this.addKey(x, y, key_name);
+		images[key_name] = this.addKeyImage(x, y, key_name);
 		key_name = 'left2';
-		images[key_name] = this.addKey(x -= width, y += height, key_name);
+		images[key_name] = this.addKeyImage(x -= width, y += height, key_name);
 		key_name = 'down2';
-		images[key_name] = this.addKey(x += width, y, key_name);
+		images[key_name] = this.addKeyImage(x += width, y, key_name);
 		key_name = 'right2';
-		images[key_name] = this.addKey(x += width, y, key_name);
+		images[key_name] = this.addKeyImage(x += width, y, key_name);
 		// Add Arrow Keys
 		x -= width;
 		y += 2 * height;
 		this.add.text(x - width, y - height, 'Alternate\nMovement', { fontFamily: 'PixelEmulator', fontSize: 20, color: '#ffffff', align: 'center' }).setOri;
 		key_name = 'up1';
-		images[key_name] = this.addKey(x, y, key_name);
+		images[key_name] = this.addKeyImage(x, y, key_name);
 		key_name = 'left1';
-		images[key_name] = this.addKey(x -= width, y += height, key_name);
+		images[key_name] = this.addKeyImage(x -= width, y += height, key_name);
 		key_name = 'down1';
-		images[key_name] = this.addKey(x += width, y, key_name);
+		images[key_name] = this.addKeyImage(x += width, y, key_name);
 		key_name = 'right1';
-		images[key_name]= this.addKey(x += width, y, key_name);
+		images[key_name]= this.addKeyImage(x += width, y, key_name);
 		// Add Undo and Reset
 		x -= 2 * width;
 		y += 2 * height;
 		this.add.text(x + width * 2, y-5, 'Undo/Restart', { fontFamily: 'PixelEmulator', fontSize: 20, color: '#ffffff' }).setOrigin(0.5, 1);
 		key_name = 'undo';
-		images[key_name] = this.addKey(x, y, key_name);
+		images[key_name] = this.addKeyImage(x, y, key_name);
 		key_name = 'reset';
-		images[key_name]= this.addKey(x += 2 * width, y, key_name);
+		images[key_name]= this.addKeyImage(x += 2 * width, y, key_name);
 		// Add Next and Previous
 		x -= 2 * width;
 		y += 2 * height;
 		this.add.text(x + width * 1.5, y-5, 'Prev/Next', { fontFamily: 'PixelEmulator', fontSize: 20, color: '#ffffff' }).setOrigin(0.5, 1);
 		key_name = 'previous';
-		images[key_name] = this.addKey(x, y, key_name);
+		images[key_name] = this.addKeyImage(x, y, key_name);
 		key_name = 'next';
-		images[key_name] = this.addKey(x += 2 * width, y, key_name);
+		images[key_name] = this.addKeyImage(x += 2 * width, y, key_name);
 
 		this.images = images;
 
@@ -81,7 +81,7 @@ export class InfoPanel extends Phaser.Scene {
 		
 	}
 
-	addKey(x, y, name) {
+	addKeyImage(x, y, name) {
 		const texture = this.textures.get(name);
 		if (!texture) {
 			console.warn(`Texture ${name} not found!`)

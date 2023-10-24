@@ -3,7 +3,7 @@
  * TODO: Make this look better, and remove all this hard coded stuff.
  */
 
-import { gameConfig } from "../config.js";
+import { gameConfig, keys} from "../config.js";
 import utils from "../utils.js";
 
 export class EndGame extends Phaser.Scene {
@@ -18,6 +18,8 @@ export class EndGame extends Phaser.Scene {
 
 	preload() {
 		this.load.image('bg', gameConfig.assets.end_screen_background_file);
+		this.load.image('left', gameConfig.assets.keys.filepath + gameConfig.assets.keys.left2);
+		this.load.image('right', gameConfig.assets.keys.filepath + gameConfig.assets.keys.right2);
 	}
 
 	create() {
@@ -38,6 +40,11 @@ export class EndGame extends Phaser.Scene {
 
 		this.createButton('Play Again', 0x159638, width * 0.32, height * 0.6, width * 0.3, height * 0.1, this.restart_action);
 		this.createButton('Next Level', 0x159638, width * 0.68, height * 0.6, width * 0.3, height * 0.1, this.next_level_action);
+		this.add.image(width * 0.32, height * 0.7, 'left').setOrigin(0.5).setScale(2);
+		this.input.keyboard.addKey(keys['left2']).on('down', () => this.restart_action(this));
+		this.add.image(width * 0.68, height * 0.7, 'right').setOrigin(0.5).setScale(2);
+		this.input.keyboard.addKey(keys['right2']).on('down', () => this.next_level_action(this));
+		
 	}
 	
 	createButton(text, color, x, y, width, height, action) { // Does not check width height for small screens
