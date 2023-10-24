@@ -1,5 +1,7 @@
 import { Playground } from "./Scenes/Playground.js";
 import { Menu } from "./Scenes/Menu.js";
+import { InfoPanel } from "./Scenes/InfoPanel.js";
+import { EndGame } from "./Scenes/EndGame.js";
 
 await document.fonts.load('10pt "LoveGlitch"');
 
@@ -12,7 +14,6 @@ const config = {
         width: '100%',
         height: '100%'
     },
-	scene: [Menu, Playground]
+	scene: [Menu, Playground, InfoPanel, EndGame]
 };
-
 export default new Phaser.Game(config);

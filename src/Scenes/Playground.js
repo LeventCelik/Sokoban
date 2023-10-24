@@ -25,16 +25,17 @@ export class Playground extends Phaser.Scene {
 			console.log('ERROR')
 			if (file.key === 'levelData' + this.level) {
 				console.log('No more levels to play');
-				// TODO: End game screen
+				this.scene.start('Playground', {level: 'level1'})
 			}
 		});
 	}
-	// Remember, avoid hard coding as much as possible!
+
 	create() {
 		this.createWorld();
 		this.createCharacter();
 		this.addKeys();
-		this.scale.resize(this.level_data.width * gameConfig.wFactor, this.level_data.height * gameConfig.hFactor);
+		this.scale.resize((3 +this.level_data.width) * gameConfig.wFactor, this.level_data.height * gameConfig.hFactor);
+		//this.configureCamera();
 	}
 
 	createWorld() {
@@ -61,7 +62,7 @@ export class Playground extends Phaser.Scene {
 		for (const obj_name in layers) {
 			layers[obj_name] = utils.create_layer(tilemaps[obj_name]);
 		}
-		this.walls = layers.walls.createFromTiles(gameConfig.assets.tiles.wall, 0, {key: 'tiles', frame: gameConfig.assets.tiles.wall})
+		this.walls = layers.walls.createFromTiles(gameConfig.assets.tiles.wall, 20, {key: 'tiles', frame: gameConfig.assets.tiles.wall})
 						.map(wall => wall.setOrigin(0, 0));
 		this.targets = layers.targets.createFromTiles(gameConfig.assets.tiles.target, 0, {key: 'tiles', frame: gameConfig.assets.tiles.target})
 						.map(target => target.setOrigin(0, 0));
@@ -69,16 +70,16 @@ export class Playground extends Phaser.Scene {
 						.map(box => box.setOrigin(0, 0));
 		
 		const level_num = parseInt(this.level.match(/\d+$/), 10);
-		this.add.text(this.level_data.width * gameConfig.wFactor, 3, 'Level ' + level_num, { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' }).setOrigin(1, 0);
+		this.add.text((3 + this.level_data.width) * gameConfig.wFactor, 3, 'Level ' + level_num, { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' }).setOrigin(1, 0);
 		
 	}
 
 	createCharacter() {
 		const ban = this.level_data.ban;
-		this.player = this.add.sprite(ban.x * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.tiles.ban.down);
+		this.player = this.add.sprite((ban.x + 3) * gameConfig.wFactor, ban.y * gameConfig.hFactor, 'tiles', gameConfig.assets.tiles.ban.down);
 		this.player.setOrigin(0, 0);
 		this.move_count = 0;
-		this.move_text = this.add.text(16, 3, 'Moves: 0', { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' });
+		this.move_text = this.add.text(16 + 3 * gameConfig.wFactor, 3, 'Moves: 0', { fontFamily: 'MyCustomFont', fontSize: 28, color: '#0000ff' });
 		this.last_move = null;
 		this.last_moved_objects = [];
 	}
@@ -108,7 +109,9 @@ export class Playground extends Phaser.Scene {
 			utils.move_sprite(box, dir);
 			game.last_move = dir;
 			game.last_moved_objects = [game.player, box];
-			if (utils.check_targets(game.boxes, game.targets)) game.next_level();
+			if (utils.check_targets(game.boxes, game.targets)) {
+				game.scene.start("EndGame", {moves: game.move_count, level: game.level});
+			}
 		}
 
 		function reset_action(event) {
@@ -139,6 +142,19 @@ export class Playground extends Phaser.Scene {
 		this.input.keyboard.addKey(keys.next).on('down', (event) => {this.next_level()});
 		this.input.keyboard.addKey(keys.previous).on('down', (event) => {this.previous_level()});
 		this.input.keyboard.addKey(keys.undo).on('down', undo_action);
+	}
+
+	configureCamera() {
+		const game = this.game;
+		const cameraConfig = {
+			x: game.scale.width * 0.25,  // Center the camera on 25% from the left edge
+			y: game.scale.height / 2,    // Center the camera vertically
+			width: game.config.width * .5,       // Set the camera width to the calculated phase scene width
+			height: game.config.height,   // Set the camera height to the total game window height
+			zoom: 1,                      // You can adjust zoom if needed
+		};
+		console.log(game.scale.width, game.scale.height);
+		this.cameras.main.setViewport(300, 0, 600, 600);
 	}
 
 	next_level() {

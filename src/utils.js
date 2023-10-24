@@ -26,14 +26,21 @@ function parse_level(location_data) {
 		// Create a new 2D array filled with nulls, but with the same dimensions as the input array
 		let newArray = location_data.map(row => row.map(() => null));
 
+		for (const row of newArray) {
+			for (let i = 0; i < 3; i++) {
+				row.unshift(0);
+			}
+		}
+
 		// Place the uniqueValue in the appropriate positions
 		for (let rowIndex = 0; rowIndex < location_data.length; rowIndex++) {
 			for (let colIndex = 0; colIndex < location_data[rowIndex].length; colIndex++) {
 				if (location_data[rowIndex][colIndex] === game_objects[obj_name]) {
-					newArray[rowIndex][colIndex] = game_objects[obj_name];
-					if (location_data[rowIndex][colIndex] !== game_objects.road
-						&& location_data[rowIndex][colIndex] !== game_objects.empty) {
-						result.road[rowIndex][colIndex] = game_objects.road;
+					newArray[rowIndex][colIndex + 3] = game_objects[obj_name];
+					if (location_data[rowIndex][colIndex] == game_objects.walls
+						|| location_data[rowIndex][colIndex] == game_objects.boxes
+						|| location_data[rowIndex][colIndex] == game_objects.targets) {
+						result.road[rowIndex][colIndex+3] = game_objects.road;
 					}
 				}
 			}
@@ -70,7 +77,7 @@ function check_world(x, y, dir, level) {
 	y = updated.y;
 	if (x < 0) return true;
 	if (y < 0) return true;
-	if (x >= level.width * gameConfig.wFactor) return true;
+	if (x >= (level.width + 3) * gameConfig.wFactor) return true;
 	if (y >= level.height * gameConfig.hFactor) return true;
 	return false;
 }
@@ -214,6 +221,8 @@ function get_next_level(currentLevel) {
  * @returns previous level
  */
 function get_previous_level(currentLevel) {
+	const level_num = parseInt(currentLevel.match(/\d+$/), 10);
+	if (level_num <= 1) return "level1";
 	return "level" + (parseInt(currentLevel.match(/\d+$/), 10) - 1);
 } 
 

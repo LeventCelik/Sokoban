@@ -1,7 +1,8 @@
 const wFactor = 64;
 const hFactor = 64;
 
-const e = 13*7-3;
+const e = 0;
+const g = 13*7-3;
 const r = 13*7-1;
 const w = 13*7-6;
 const t = 13*4-1;
@@ -20,6 +21,7 @@ export const gameConfig = {
 			file: folder_path + 'tiles/sokoban_tilesheet.png',
 			factor: 64,
 			empty: e,
+			grass: g,
 			road: r,
 			wall: w,
 			target: t,
@@ -35,16 +37,33 @@ export const gameConfig = {
 				'r': r,
 				'w': w,
 				't': t,
-				'b': b
+				'b': b,
+				'g': g
 			},
 		},
 		fonts: {
 			file: folder_path + 'fonts/love-glitch/LoveGlitchPersonalUseRegular.ttf',
 			name: 'MyCustomFont'
-		}
+		},
+		keys: {
+			filepath: 'assets/keys/SimpleKeys/Jumbo/Light/Single PNGs/',
+			left1: 'A.png',
+			left2: 'ARROWLEFT.png',
+			right1: 'D.png',
+			right2: 'ARROWRIGHT.png',
+			up1: 'W.png',
+			up2: 'ARROWUP.png',
+			down1: 'S.png',
+			down2: 'ARROWDOWN.png',
+			reset: 'R.png',
+			next: 'N.png',
+			previous: 'B.png',
+			undo: 'U.png'
+		},
+		end_screen_background_file: folder_path + 'images/pixel-brick-wall.jpg',
 	},
 	levels: {
-		filepath: folder_path + 'levels/'
+		filepath: folder_path + 'levels/',
 	},
 	/**
 	 * This special syntax is called a "getter".
@@ -56,14 +75,15 @@ export const gameConfig = {
 		return {
 			// Rendered in order so that the last one is on top
 			empty: e,
+			grass: g,
 			road: r,
 			walls: w,
 			targets: t,
 			boxes: b
 		}
 	},
-	wFactor : wFactor,
-	hFactor : hFactor
+	wFactor: wFactor,
+	hFactor: hFactor
 };
 
 export const keys = {

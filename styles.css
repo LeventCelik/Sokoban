@@ -11,7 +11,10 @@ body {
 #header, #footer {
     width: 100%;
     flex-shrink: 0; /* Prevents flexbox from shrinking these items */
-    background-color: black;
+    background-color: rgb(240, 0, 0);
+    h1 {
+        text-align: center;
+    }
 }
 
 #main-content {
@@ -25,16 +28,11 @@ body {
 
 #gameContainer {
     /* Your game container styles, width and height */
-    width: calc(100% - 800px);
-    height: calc(100% - 400px);
+    width: 900px;
+    height: 600px;
     margin: 200px auto;
-    background-color: black;
+    background-color: rgb(28, 207, 111);
     flex-shrink: 0; /* Prevents flexbox from shrinking this item */
-}
-
-#sidebar-left, #sidebar-right {
-    /* Your sidebar styles, width, etc. */
-    background-color: black;
 }
 
 /* Add media queries for responsive design as necessary */
