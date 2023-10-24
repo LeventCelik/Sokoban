@@ -14,8 +14,6 @@ export class EndGame extends Phaser.Scene {
 	init(data) {
 		this.level = data.level;
 		this.moves = data.moves;
-		console.log(this.level);
-		console.log(this.moves);
 	}
 
 	preload() {
@@ -54,8 +52,6 @@ export class EndGame extends Phaser.Scene {
 	}
 
 	next_level_action(game) {
-		console.log('HERE');
-		console.log(game.level);
 		game.scene.start('Playground', {level: utils.get_next_level(game.level)});
 	}
 
