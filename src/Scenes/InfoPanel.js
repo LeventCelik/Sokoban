@@ -57,7 +57,7 @@ export class InfoPanel extends Phaser.Scene {
 		// Add Next and Previous
 		x -= 2 * width;
 		y += 2 * height;
-		this.add.text(x + width * 1.5, y-5, 'Next/Prev', { fontFamily: 'PixelEmulator', fontSize: 20, color: '#ffffff' }).setOrigin(0.5, 1);
+		this.add.text(x + width * 1.5, y-5, 'Prev/Next', { fontFamily: 'PixelEmulator', fontSize: 20, color: '#ffffff' }).setOrigin(0.5, 1);
 		key_name = 'previous';
 		images[key_name] = this.addKey(x, y, key_name);
 		key_name = 'next';
