@@ -3,7 +3,7 @@ Browser Sokoban for CPSC 8710 Fall 23
 
 Sokoban (Warehouse Keeper) is a classic video game designed in 1981 by Hiroyuki Imabayashi. It's a puzzle game in which the player pushes boxes around a warehouse, trying to get them to storage locations.
 
-The game can be played online through [here](LeventCelik.github.io/Sokoban).
+The game can be played online through [here](https://LeventCelik.github.io/Sokoban).
 
 # How To Play
 
