@@ -3,7 +3,7 @@ Browser Sokoban for CPSC 8710 Fall 23
 
 Sokoban (Warehouse Keeper) is a classic video game designed in 1981 by Hiroyuki Imabayashi. It's a puzzle game in which the player pushes boxes around a warehouse, trying to get them to storage locations.
 
-The game can be played online through [here][LeventCelik.github.io/Sokoban].
+The game can be played online through [here](LeventCelik.github.io/Sokoban).
 
 # How To Play
 
@@ -33,18 +33,18 @@ This game is built entirely using JavaScript, HTML, and CSS.
 
 ## Phaser
 
-The game runs on [Phaser 3][https://phaser.io], an open source and lightweight game engine for browser games.
+The game runs on [Phaser 3](https://phaser.io), an open source and lightweight game engine for browser games.
 
 ## Assets
 
-- For tiles, we use the free [Kenney Sokoban Assets][https://kenney.nl/assets/sokoban].
-- For keyboard buttons, we use the [SimpleKeys][https://beamedeighth.itch.io/simplekeys-animated-pixel-keyboard-keys?download] by the creator beamedeight.
-- We use [Pixel Emulator Font][https://www.dafont.com/pixel-emulator.font] by [Pixel Sagas][http://www.pixelsagas.com].
+- For tiles, we use the free [Kenney Sokoban Assets](https://kenney.nl/assets/sokoban).
+- For keyboard buttons, we use the [SimpleKeys](https://beamedeighth.itch.io/simplekeys-animated-pixel-keyboard-keys?download) by the creator beamedeight.
+- We use [Pixel Emulator Font](https://www.dafont.com/pixel-emulator.font) by [Pixel Sagas](http://www.pixelsagas.com).
 
 ## Outside Help
 
-- We have taken great help from [Ourcade Sokoban Template][https://ourcade.co/templates/sokoban-template/] especially during the start of the project, as we still learn Phaser. However, not only the end result is significantly different, our approach to the game was completely independent after the point of important assets and putting the character on the canvas - which was refactored later as well. We have neither copied any code, or gone through the algorithms of the previous implementations.
-- We have referred to the [Discord Phaser Community][https://discord.gg/phaser] at times for Phaser help.
+- We have taken great help from [Ourcade Sokoban Template](https://ourcade.co/templates/sokoban-template/) especially during the start of the project, as we still learn Phaser. However, not only the end result is significantly different, our approach to the game was completely independent after the point of important assets and putting the character on the canvas - which was refactored later as well. We have neither copied any code, or gone through the algorithms of the previous implementations.
+- We have referred to the [Discord Phaser Community](https://discord.gg/phaser) at times for Phaser help.
 
 # Development
 
