@@ -55,4 +55,6 @@ Our longest struggle was the resizing and rescaling of the game environment. We 
 
 Our second largest struggle was somewhat related: displaying the keyboard information side by side with the game. The panel that holds the keyboard information is a second Phaser scene ran on top of the game, and manipulating the cameras created issues with the layout. We have found some workarounds, but we intend to implement better ways to handle scaling.
 
-Currently, the scaling is not working perfectly. This can be observed particularly well by the keyboard buttons resizing, which should not happen.
+Currently, the scaling is not working perfectly. This can be observed particularly well by the keyboard buttons resizing, which we decided to keep as a _feature_.
+
+Choice of Phaser was a good idea - there are numerous resources online for learning the basics, as well as examples for more complicated functionality. Moreover, it can almost trivially be deployed into a web server; thus, can easily be developed.
