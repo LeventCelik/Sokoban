@@ -57,4 +57,8 @@ Our second largest struggle was somewhat related: displaying the keyboard inform
 
 Currently, the scaling is not working perfectly. This can be observed particularly well by the keyboard buttons resizing, which we decided to keep as a _feature_.
 
-Choice of Phaser was a good idea - there are numerous resources online for learning the basics, as well as examples for more complicated functionality. Moreover, it can almost trivially be deployed into a web server; thus, can easily be developed.
+Choice of Phaser was a good idea - there are numerous resources online for learning the basics, as well as examples and a helpful community for more complicated functionality. Moreover, it can almost trivially be deployed into a web server; thus, can easily be developed. At first we were in between using JS and PyScript, and we decided on JS becuase it is proven to be stable across browsers. This choice helped us greatly, because the game engines written on Python may not have workes as well as Phaser on a browser environment.
+
+We have learnt the value of refactoring in this project; as, there are many ways of achieving similar tasks using Phaser, and some end up not working in the end. Keeping an oranized structure and avoiding hard coding was especially important un an unfamiliar environment.
+
+We also intend to continue on this project by adding new levels, a user interface for choosing levels, support for creating accounts and saving data, as well as a leaderboard. 
