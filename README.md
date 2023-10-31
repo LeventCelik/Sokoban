@@ -47,7 +47,7 @@ The game runs on [Phaser 3](https://phaser.io), an open source and lightweight g
 - We have taken great help from [Ourcade Sokoban Template](https://ourcade.co/templates/sokoban-template/) especially during the start of the project, as we still learn Phaser. However, not only the end result is significantly different, our approach to the game was completely independent after the point of important assets and putting the character on the canvas - which was refactored later as well. We have neither copied any code, or gone through the algorithms of the previous implementations.
 - We have referred to the [Discord Phaser Community](https://discord.gg/phaser) at times for Phaser help.
 
-# Development
+# Reflection
 
 Overall, building the game was relatively easy and a lot of fun. Phaser is easy to get into, and Sokoban did not require any specific skills.
 
